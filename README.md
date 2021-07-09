@@ -4,7 +4,7 @@ This example demonstrates how to stream data using DMA via UART based on Univers
 
 ## Requirements
 
-- [ModusToolbox® software](https://www.cypress.com/products/modustoolbox-software-environment) v2.3
+- [ModusToolbox&trade; software](https://www.cypress.com/products/modustoolbox-software-environment) v2.3
 - [SEGGER J-Link software](https://www.segger.com/downloads/jlink/#J-LinkSoftwareAndDocumentationPack)
 - Programming Language: C
 - Associated Parts: All [XMC™ MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-industrial-microcontroller-based-on-arm-cortex-m/) parts
@@ -23,7 +23,7 @@ This example uses the board's default configuration. See the kit user guide to e
 
 ## Software Setup
 
-Install a terminal emulator if you don't have one. Instructions in this document use [Tera Term](https://ttssh2.osdn.jp/index.html.en).
+Install a terminal emulator if you do not have one. Instructions in this document use [Tera Term](https://ttssh2.osdn.jp/index.html.en).
 
 ## Using the Code Example
 
@@ -93,7 +93,7 @@ Various CLI tools include a `-h` option that prints help information to the term
 
 1. Connect the board to your PC using a micro-USB cable through the debug USB connector.
 
-2. Open a terminal program and select the JLINK CDC UART COM port. Configure the terminal with baud rate of 115200, data bits of 8, stop bits of 1, and with parity and flow control set to none.
+2. Open a terminal program and select the **JLINK CDC UART COM** port. Configure the terminal with a baud rate of 115200, data bits of 8, stop bit of 1, and with parity and flow control set to none.
 
 3. Program the board.
 
@@ -105,7 +105,7 @@ Various CLI tools include a `-h` option that prints help information to the term
 
 4. After programming, the application starts automatically.
    
-   First, a 256-byte RAM-buffer is filled with uppercase ASCII-codes A..Z. Afterwards, a 256-byte RAM-buffer is filled with lowercase ASCII-codes a..z. Both buffers are transferred to the terminal using DMA via UART.
+   First, a 256-byte RAM buffer is filled with uppercase ASCII-codes A..Z. Next, a 256-byte RAM buffer is filled with lowercase ASCII-codes a..z. Both buffers are transferred to the terminal using DMA via UART.
 
    Confirm that the uppercase and lowercase characters appear on the terminal as shown in Figure 1.
 
@@ -116,6 +116,14 @@ Various CLI tools include a `-h` option that prints help information to the term
 ## Debugging
 
 You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (JLink)** configuration in the **Quick Panel**. For more details, see the "Program and Debug" section in the [Eclipse IDE for ModusToolbox User Guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
+
+## Design and Implementation
+
+The Implementation is realized by using a UART resource. UART is configured by **uart 1.0** personality in **Device Configurator** where UART features, such as baudrate, data bits, and frame length, were selected.
+
+Firstly, the source buffers (buffer1 and buffer2) with the length BUFFER_LENGTH are defined. Secondly, ASCII-codes are saved in this buffer. In buffer1, A…Z are saved. In buffer2, a…z are saved.
+
+To transmit the data from the source to the user via UART, DMA and the UART interface are initialized. Next, the data is streamed from the first source. After the XMC_DMA_CH_EVENT_BLOCK_TRANSFER_COMPLETE event has occurred, data is streamed form the second source.
 
 ## Related Resources
 
@@ -145,10 +153,11 @@ For XMC MCU devices, see [32-bit XMC™ Industrial Microcontroller based on Arm�
 
 Document Title: *CE231994* - *XMC MCU: UART DMA*
 
-| Version | Description of Change |
-| ------- | --------------------- |
-| 0.5.0   | New code example      |
+| Version | Description of Change                         |
+| ------- | --------------------------------------------- |
+| 0.5.0   | New code example                              |
 | 1.0.0   | Updated to support ModusToolbox software v2.3 |
+| 1.0.1   | Updated README                                |
 ------
 
 All other trademarks or registered trademarks referenced herein are the property of their respective owners.
