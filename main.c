@@ -41,12 +41,12 @@
 
 #include "cybsp.h"
 #include "cy_utils.h"
-
 #include "xmc_dma.h"
 
 /*******************************************************************************
 * Macros
 *******************************************************************************/
+
 /* Size of source buffer(s) for the DMA to read from */
 #define BUFFER_LENGTH                           256
 
@@ -62,6 +62,7 @@
 /*******************************************************************************
 * Global Variables
 *******************************************************************************/
+
 /* Source buffers for DMA */
 uint8_t buffer1[BUFFER_LENGTH];
 uint8_t buffer2[BUFFER_LENGTH];
@@ -69,7 +70,6 @@ uint8_t buffer2[BUFFER_LENGTH];
 /* Flag variable to register when transfer is finished */
 volatile bool transfer_done = false;
 
-/* Configuration of DMA */
 XMC_DMA_CH_CONFIG_t dma_ch_config =
 {
   .dst_addr = (uint32_t)&(CYBSP_DEBUG_UART_HW->TBUF[0]),              /* Destination address */
@@ -155,7 +155,6 @@ int main(void)
 
     /* Initial trigger for DMA transfer */
     XMC_USIC_CH_TriggerServiceRequest(XMC_UART0_CH0, 0);
-
     /* Execute DMA transfer of buffer 1 */
     transfer_done = false;
     /* Set Block size of the next transfer */
